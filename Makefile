@@ -3,15 +3,19 @@
 ######################################################################
 
 BINARY		= main
-SRCFILES	= main.c 
+SRCFILES	= main.c
+
+# src files from static libs
+SRCFILES	+= lib/src/led.c
+SRCFILES	+= lib/src/button.c
+SRCFILES	+= lib/src/clock.c  
 
 # HEADER FILES DIR
-TGT_CFLAGS		+= -I$(TOP_DIR)/police-flashing-lights
-TGT_CPPFLAGS	+= -I$(TOP_DIR)/police-flashing-lights
-
+TGT_CFLAGS		+= -I$(TOP_DIR)/police-flashing-lights/include
+TGT_CPPFLAGS	+= -I$(TOP_DIR)/police-flashing-lights/include
 
 # DEPENDENCIES (STATIC LIBs)
-#LDLIBS			+= -L$(TOP_DIR)/library/lib
+LDLIBS			+= -L$(TOP_DIR)/library/lib
 
 
 
