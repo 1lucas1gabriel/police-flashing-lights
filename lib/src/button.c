@@ -36,6 +36,10 @@ button_states_t ButtonRead(Button *button){
     			// set flag to inform rising edge of debounced button status. Flag consumers must set down (acknowledge)
     	 		button->risingEdgeFound = true;
     	 	}
+			else{ // debouncedButtonState == (button_released)
+				// set flag to inform falling edge of debounced button status. Flag consumers must set down (acknowledge)
+    	 		button->fallingEdgeFound = true;
+			}
     	}
   	}
   	

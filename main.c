@@ -24,6 +24,7 @@ int main(void){
 						70,  // debounce time (msecs)
 						button_released, 
 						button_released,
+						false,
 						false};
 						
 	LED redLED   =	{GPIOB, 
@@ -58,9 +59,10 @@ int main(void){
 		ButtonRead(&pushbutton);
 		
 		if(pushbutton.risingEdgeFound == true){
-			pushbutton.risingEdgeFound = false; // ACK to rising edge
+			pushbutton.risingEdgeFound = false; // ACK to rising edge flag
 			blueLED.ledState = (blueLED.ledState == !led_status_flashing) ? led_status_flashing : led_status_off;
 		}
+
 		
 		if(blueLED.ledState == led_status_flashing){
 			LEDActuate(&redLED, led_actuate_flashing);

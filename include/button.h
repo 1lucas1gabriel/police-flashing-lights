@@ -27,7 +27,8 @@ typedef struct{
 	uint16_t 		debounceDelay;			// configurable debounce time (msecs)
 	button_states_t lastButtonReading;		// previous reading from the input pin
 	button_states_t debouncedButtonState;	// current debounced button state
-	bool risingEdgeFound;
+	bool risingEdgeFound;					// rising edge flag. >> Consumers must set false to acknowledge <<
+	bool fallingEdgeFound;					// falling edge flag. >> Consumers must set false to acknowledge <<
 
 } Button;
 
