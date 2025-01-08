@@ -31,10 +31,11 @@ typedef struct{
 	const uint32_t 	GPIOPort;
 	const uint16_t 	GPIOPin;
 	enum rcc_periph_clken GPIO_Clken;
-	led_states_t 	ledState;
-	uint32_t 		lastActivationTime; 	// last time led was active
-	uint32_t 		offPeriod; 				// control (duty cycle) time period led stays off (msecs)
+	led_states_t 	ledState;				// current led state
+	uint32_t 		lastDeactivationTime; 	// last time led was set Inactive
+	uint32_t 		OnPeriod; 				// control (duty cycle) time period led stays On (msecs) <= flashingPeriod
 	uint32_t 		flashingPeriod;		  	// light flashing period (msecs)
+	uint32_t		offset;					// Offset time from initial time;
 	
 } LED;
 

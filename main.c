@@ -1,4 +1,4 @@
-// Flashing lights with non-blocking function
+// Flashing lights with non-blocking functions
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/cm3/systick.h>
@@ -21,29 +21,36 @@ int main(void){
 						GPIO11,
 						RCC_GPIOB, 
 						0, 
-						70, 
+						70,  // debounce time (msecs)
 						button_released, 
 						button_released,
 						false};
 						
-	LED greenLED	  = {GPIOC, 
-						GPIO13,
-						RCC_GPIOC,
-						led_status_off,
-						0,
-						250,
-						500};
+	LED redLED   =	{GPIOB, 
+					GPIO13,
+					RCC_GPIOB,
+					led_status_off, // initial led state
+					0,
+					250, // on time period
+					500, // flashing period
+					0}; //offset
+					
+	LED blueLED   =	{GPIOA, 
+					GPIO12,
+					RCC_GPIOA,
+					led_status_off, // initial led state
+					0,
+					250,
+					500,
+					250}; //offset
+					
 	
 	clock_setup();
 	systick_setup();
 	
 	ButtonInit(&pushbutton);
-	LEDInit(&greenLED);
-	
-	LEDActuate(&greenLED, led_actuate_off);
-	delay(1000);
-	LEDActuate(&greenLED, led_actuate_on);
-	delay(1000);
+	LEDInit(&blueLED);	
+	LEDInit(&redLED);
 	
 		
 	while(1) {
@@ -52,14 +59,16 @@ int main(void){
 		
 		if(pushbutton.risingEdgeFound == true){
 			pushbutton.risingEdgeFound = false; // ACK to rising edge
-			greenLED.ledState = (greenLED.ledState == !led_status_flashing) ? led_status_flashing : led_status_off;
+			blueLED.ledState = (blueLED.ledState == !led_status_flashing) ? led_status_flashing : led_status_off;
 		}
 		
-		if(greenLED.ledState == led_status_flashing){
-			LEDActuate(&greenLED, led_actuate_flashing);
+		if(blueLED.ledState == led_status_flashing){
+			LEDActuate(&redLED, led_actuate_flashing);
+			LEDActuate(&blueLED, led_actuate_flashing);
 		}
 		else{
-			LEDActuate(&greenLED, led_actuate_off);
+			LEDActuate(&blueLED, led_actuate_off);
+			LEDActuate(&redLED, led_actuate_off);
 		}
 	}
 	return 0;
