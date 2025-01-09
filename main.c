@@ -25,7 +25,9 @@ int main(void){
 						button_released, 
 						button_released,
 						false,
-						false};
+						false,
+						0,
+						0};
 						
 	LED redLED   =	{GPIOB, 
 					GPIO13,
@@ -59,8 +61,22 @@ int main(void){
 		ButtonRead(&pushbutton);
 		
 		if(pushbutton.risingEdgeFound == true){
+			pushbutton.lastRisingEdgeTime = millis();
 			pushbutton.risingEdgeFound = false; // ACK to rising edge flag
-			blueLED.ledState = (blueLED.ledState == !led_status_flashing) ? led_status_flashing : led_status_off;
+			//blueLED.ledState = (blueLED.ledState == !led_status_flashing) ? led_status_flashing : led_status_off;
+		}
+		if(pushbutton.fallingEdgeFound == true){
+			pushbutton.lastFallingEdgeTime = millis();
+			pushbutton.fallingEdgeFound = false; // ACK to falling edge flag
+		}
+
+		//short press
+		if((pushbutton.lastFallingEdgeTime - pushbutton.lastRisingEdgeTime) <= 2000){
+			blueLED.ledState = led_status_off;
+		}
+		//long press
+		else{
+			blueLED.ledState = led_status_flashing;
 		}
 
 		
