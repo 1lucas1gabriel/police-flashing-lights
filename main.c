@@ -18,36 +18,35 @@ static void clock_setup(void){
 int main(void){
 
 	Button pushbutton = {GPIOB,
-						GPIO11,
-						RCC_GPIOB, 
-						0, 
-						70,  // debounce time (msecs)
-						button_released, 
-						button_released,
-						false,
-						false,
-						0,
-						0};
-						
-	LED redLED   =	{GPIOB, 
-					GPIO13,
-					RCC_GPIOB,
-					led_status_off, // initial led state
-					0,
-					250, // on time period
-					500, // flashing period
-					0}; //offset
-					
-	LED blueLED   =	{GPIOA, 
-					GPIO12,
-					RCC_GPIOA,
-					led_status_off, // initial led state
-					0,
-					250,
-					500,
-					250}; //offset
-					
-	
+						 GPIO11,
+						 RCC_GPIOB,
+						 0,
+						 70, // debounce time (msecs)
+						 button_released,
+						 button_released,
+						 false,
+						 false,
+						 0,
+						 0};
+
+	LED redLED = {GPIOB,
+				  GPIO13,
+				  RCC_GPIOB,
+				  led_status_off, // initial led state
+				  0,
+				  250, // on time period
+				  500, // flashing period
+				  0};  // offset
+
+	LED blueLED = {GPIOA,
+				   GPIO12,
+				   RCC_GPIOA,
+				   led_status_off, // initial led state
+				   0,
+				   250,
+				   500,
+				   250}; // offset
+
 	clock_setup();
 	systick_setup();
 	
@@ -69,7 +68,7 @@ int main(void){
 		
 		/* control flashing lights upon short/long button press */
 		ButtonDetectEdges(&pushbutton);
-		
+
 		//long press
 		if(pushbutton.lastFallingEdgeTime >= (pushbutton.lastRisingEdgeTime + 2000)){
 			blueLED.ledState = led_status_flashing;
