@@ -58,18 +58,18 @@ int main(void){
 		
 	while(1) {
 		
+		/* control flashing lights upon toggle button
 		ButtonRead(&pushbutton);
-		
-		if(pushbutton.risingEdgeFound == true){
-			pushbutton.lastRisingEdgeTime = millis();
-			pushbutton.risingEdgeFound = false; // ACK to rising edge flag
-			//blueLED.ledState = (blueLED.ledState == !led_status_flashing) ? led_status_flashing : led_status_off;
-		}
-		if(pushbutton.fallingEdgeFound == true){
-			pushbutton.lastFallingEdgeTime = millis();
-			pushbutton.fallingEdgeFound = false; // ACK to falling edge flag
-		}
 
+		if(pushbutton.risingEdgeFound == true){
+			blueLED.ledState = (blueLED.ledState == !led_status_flashing) ? led_status_flashing : led_status_off;
+			pushbutton.risingEdgeFound = false; // ACK to rising edge flag
+		}
+		*/
+		
+		/* control flashing lights upon short/long button press */
+		ButtonDetectEdges(&pushbutton);
+		
 		//long press
 		if(pushbutton.lastFallingEdgeTime >= (pushbutton.lastRisingEdgeTime + 2000)){
 			blueLED.ledState = led_status_flashing;
@@ -78,7 +78,6 @@ int main(void){
 		else{
 			blueLED.ledState = led_status_off;
 		}
-
 		
 		if(blueLED.ledState == led_status_flashing){
 			LEDActuate(&redLED, led_actuate_flashing);

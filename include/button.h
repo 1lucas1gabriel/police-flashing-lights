@@ -36,6 +36,7 @@ typedef struct{
 
 void ButtonInit(Button *button);
 button_states_t ButtonRead(Button *button);
+void ButtonDetectEdges(Button *button);
 
 
 #endif	// BUTTON_H

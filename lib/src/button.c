@@ -47,3 +47,18 @@ button_states_t ButtonRead(Button *button){
 	
 	return button->debouncedButtonState;
 }
+
+void ButtonDetectEdges(Button *button){
+
+	ButtonRead(button);
+
+	if(button->risingEdgeFound == true){
+			button->lastRisingEdgeTime = millis();
+			button->risingEdgeFound = false; // ACK to rising edge flag
+	}
+
+	if(button->fallingEdgeFound == true){
+		button->lastFallingEdgeTime = millis();
+		button->fallingEdgeFound = false; // ACK to falling edge flag
+	}
+}
