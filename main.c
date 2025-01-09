@@ -70,13 +70,13 @@ int main(void){
 			pushbutton.fallingEdgeFound = false; // ACK to falling edge flag
 		}
 
-		//short press
-		if((pushbutton.lastFallingEdgeTime - pushbutton.lastRisingEdgeTime) <= 2000){
-			blueLED.ledState = led_status_off;
-		}
 		//long press
-		else{
+		if(pushbutton.lastFallingEdgeTime >= (pushbutton.lastRisingEdgeTime + 2000)){
 			blueLED.ledState = led_status_flashing;
+		}
+		//short press
+		else{
+			blueLED.ledState = led_status_off;
 		}
 
 		
