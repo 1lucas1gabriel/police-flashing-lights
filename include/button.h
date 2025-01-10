@@ -29,8 +29,8 @@ typedef struct{
 	button_states_t debouncedButtonState;	// current debounced button state
 	bool risingEdgeFound;					// rising edge flag. >> Consumers must set false to acknowledge <<
 	bool fallingEdgeFound;					// falling edge flag. >> Consumers must set false to acknowledge <<
-	uint32_t 		lastRisingEdgeTime;
-	uint32_t 		lastFallingEdgeTime;
+	uint32_t 		lastRisingEdgeTime;		// last time rising edge found
+	uint32_t 		lastFallingEdgeTime;	// last time falling edge found
 } Button;
 
 

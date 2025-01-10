@@ -2,8 +2,8 @@
 #  Project
 ######################################################################
 
-BINARY		= main
-SRCFILES	= main.c
+BINARY		= variable-flashing-rate
+SRCFILES	= variable-flashing-rate.c
 
 # src files from static libs
 SRCFILES	+= lib/src/led.c

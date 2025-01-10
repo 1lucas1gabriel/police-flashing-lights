@@ -44,3 +44,9 @@ void LEDActuate(LED *led, led_actuation_t action){
 		led->ledState = led_status_off;
 	}	
 }
+
+void LEDUpdateFlashingRate(LED *led, uint32_t newFlashingPeriod, uint32_t newOnPeriod, uint32_t newOffset){
+	led->flashingPeriod = newFlashingPeriod;
+	led->OnPeriod = newOnPeriod;
+	led->offset = newOffset;
+}

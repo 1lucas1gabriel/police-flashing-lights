@@ -57,37 +57,37 @@ int main(void){
 	LEDInit(&blueLED);	
 	LEDInit(&redLED);
 	
-		
 	while(1) {
-		
-		/* control flashing lights upon toggle button
-		ButtonRead(&pushbutton);
-
-		if(pushbutton.risingEdgeFound == true){
-			blueLED.ledState = (blueLED.ledState == !led_status_flashing) ? led_status_flashing : led_status_off;
-			pushbutton.risingEdgeFound = false; // ACK to rising edge flag
-		}
-		*/
 		
 		/* control flashing lights upon short/long button press */
 		ButtonDetectEdges(&pushbutton);
 
-		//long press
-		if(pushbutton.lastFallingEdgeTime >= (pushbutton.lastRisingEdgeTime + 2000)){
+		//long long press
+		if(pushbutton.lastFallingEdgeTime >= (pushbutton.lastRisingEdgeTime + 1000)){
 			blueLED.ledState = led_status_flashing;
+			LEDUpdateFlashingRate(&redLED, 200, 100, 0);
+			LEDUpdateFlashingRate(&blueLED,200, 100, 100);
+		}
+		// long press
+		else if((pushbutton.lastFallingEdgeTime < (pushbutton.lastRisingEdgeTime + 1000)) &&
+				(pushbutton.lastFallingEdgeTime >=(pushbutton.lastRisingEdgeTime + 250))){
+			blueLED.ledState = led_status_flashing;
+			LEDUpdateFlashingRate(&redLED, 1000, 500, 0);
+			LEDUpdateFlashingRate(&blueLED,1000, 500, 500);
 		}
 		//short press
 		else{
 			blueLED.ledState = led_status_off;
-		}
+		} 
 		
+
 		if(blueLED.ledState == led_status_flashing){
 			LEDActuate(&redLED, led_actuate_flashing);
 			LEDActuate(&blueLED, led_actuate_flashing);
 		}
 		else{
-			LEDActuate(&blueLED, led_actuate_off);
 			LEDActuate(&redLED, led_actuate_off);
+			LEDActuate(&blueLED, led_actuate_off);
 		}
 	}
 	return 0;

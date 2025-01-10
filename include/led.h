@@ -42,6 +42,7 @@ typedef struct{
 
 void LEDInit(LED *led);
 void LEDActuate(LED *led, led_actuation_t action);
+void LEDUpdateFlashingRate(LED *led, uint32_t newFlashingPeriod, uint32_t newOnPeriod, uint32_t newOffset);
 
 
 #endif //LED_H
